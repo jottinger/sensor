@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:padding="5dp"
+        >
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/routerUrlLabel"
+            />
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/routerUrl"
+            android:id="@+id/routerUrl"
+            android:inputType="textUri"/>
+
+    <ToggleButton
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            style="@android:style/Widget.Button.Toggle"
+            android:textOn="@string/sensorEnabled"
+            android:textOff="@string/sensorDisabled"
+            android:id="@+id/sensorActive"/>
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lightLevelLabel"
+            />
+    <ProgressBar
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lightLevel"
+            style="@android:style/Widget.ProgressBar.Horizontal"
+            />
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/logLabel"/>
+    <TextView android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@android:color/darker_gray"
+              android:textColor="@android:color/black"
+              android:fadeScrollbars="true"
+              android:scrollbars="vertical"
+              android:id="@+id/logBox"/>
+</LinearLayout>
