@@ -26,6 +26,7 @@
          variable -->
       <jboss.home>/home/jottinge/tools/jboss-as-7.1.1.Final</jboss.home>
        <infinispan.version>[5.1.5.FINAL,)</infinispan.version>
+       <dwr.version>2.0.3</dwr.version>
    </properties>
 
    <dependencyManagement>
@@ -53,16 +54,10 @@
 
    <dependencies>
        <dependency>
-           <groupId>com.google.gwt</groupId>
-           <artifactId>gwt-servlet</artifactId>
-           <version>${gwtVersion}</version>
-           <scope>runtime</scope>
-       </dependency>
-       <dependency>
-           <groupId>com.google.gwt</groupId>
-           <artifactId>gwt-user</artifactId>
-           <version>${gwtVersion}</version>
-           <scope>provided</scope>
+           <groupId>org.directwebremoting</groupId>
+           <artifactId>dwr</artifactId>
+           <version>${dwr.version}</version>
+           <type>pom</type>
        </dependency>
 
        <dependency>
