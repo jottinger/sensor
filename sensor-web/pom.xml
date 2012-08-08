@@ -26,7 +26,7 @@
          variable -->
       <jboss.home>/home/jottinge/tools/jboss-as-7.1.1.Final</jboss.home>
        <infinispan.version>[5.1.5.FINAL,)</infinispan.version>
-       <dwr.version>2.0.3</dwr.version>
+       <dwr.version>[2.0.10,)</dwr.version>
    </properties>
 
    <dependencyManagement>
@@ -57,7 +57,6 @@
            <groupId>org.directwebremoting</groupId>
            <artifactId>dwr</artifactId>
            <version>${dwr.version}</version>
-           <type>pom</type>
        </dependency>
 
        <dependency>
@@ -190,29 +189,6 @@
                <target>1.7</target>
             </configuration>
          </plugin>
-          <!-- GWT Maven Plugin -->
-          <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>gwt-maven-plugin</artifactId>
-              <version>2.5.0-rc1</version>
-              <executions>
-                  <execution>
-                      <goals>
-                          <goal>compile</goal>
-                          <goal>test</goal>
-                          <goal>i18n</goal>
-                          <goal>generateAsync</goal>
-                      </goals>
-                  </execution>
-              </executions>
-              <!-- Plugin configuration. There are many available options, see
-          gwt-maven-plugin documentation at codehaus.org -->
-              <configuration>
-                  <runTarget>data.html</runTarget>
-                  <hostedWebapp>${webappDirectory}</hostedWebapp>
-                  <i18nMessagesBundle>com.redhat.osas.sensor.web.client.Messages</i18nMessagesBundle>
-              </configuration>
-          </plugin>
 
           <plugin>
             <artifactId>maven-war-plugin</artifactId>

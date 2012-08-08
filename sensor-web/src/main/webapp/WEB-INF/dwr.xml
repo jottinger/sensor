@@ -1,0 +1,12 @@
+<!DOCTYPE dwr PUBLIC
+        "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN"
+        "http://directwebremoting.org/schema/dwr20.dtd">
+
+<dwr>
+    <allow>
+        <convert converter="jackson" match="com.redhat.osas.sensor.data.*"/>
+        <create creator="new" javascript="provider">
+            <param name="class" value="com.redhat.osas.sensor.web.external.Provider"/>
+        </create>
+    </allow>
+</dwr>
