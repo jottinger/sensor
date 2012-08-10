@@ -36,13 +36,12 @@
     var map;
     function initialize() {
         var mapOptions = {
-            center:new google.maps.LatLng(35.9948, -78.4405),
+            center:new google.maps.LatLng(35.773371, -78.67743),
             zoom:8,
             mapTypeId:google.maps.MapTypeId.TERRAIN
         };
         map = new google.maps.Map(document.getElementById("map_canvas"),
                 mapOptions);
-        setInterval(updateMap(), 6000);
     }
     function updateMap() {
 
@@ -50,17 +49,20 @@
             callback:function (tsDataEncoded) {
                 var tsData = eval(tsDataEncoded);
                 for (id in tsData) {
-                    var myLatLng = new google.maps.LatLng(tsData[id]['latitude'], tsData[id]['longitude']);
+                    var myLatLng = new google.maps.LatLng(tsData[id]['latitude'],
+                            tsData[id]['longitude']);
                     if (locations[id] == null) {
                         var marker = new google.maps.Marker({
                             position:myLatLng,
                             title:id
                         });
                         marker.setMap(map);
+                        marker.setTitle("" + tsData[id]['level'])
                         locations[id] = marker;
                     }
                     else {
                         locations[id].setPosition(myLatLng);
+                        marker.setTitle("" + tsData[id]['level'])
                     }
                 }
 
@@ -86,6 +88,9 @@
      });
      */
     initialize();
+    setInterval(function () {
+        updateMap()
+    }, 10000);
 </script>
 </body>
 </html>
