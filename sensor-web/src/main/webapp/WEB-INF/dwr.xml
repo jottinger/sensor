@@ -4,8 +4,7 @@
 
 <dwr>
     <allow>
-        <convert converter="jackson" match="com.redhat.osas.sensor.data.*"/>
-        <create creator="new" javascript="provider">
+        <create creator="new" javascript="Provider">
             <param name="class" value="com.redhat.osas.sensor.web.external.Provider"/>
         </create>
     </allow>

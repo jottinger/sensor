@@ -17,7 +17,6 @@
     <modules>
         <module>common-data</module>
         <module>httpconnector</module>
-
         <module>android-sensor</module>
         <module>sensor-web</module>
     </modules>
@@ -43,4 +42,15 @@
             <url>http://repository.jboss.org/maven2</url>
         </repository>
     </repositories>
+
+    <profiles>
+        <profile>
+            <id>noAndroid</id>
+            <modules>
+                <module>common-data</module>
+                <module>httpconnector</module>
+                <module>sensor-web</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>

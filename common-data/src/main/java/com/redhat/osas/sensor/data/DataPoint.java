@@ -9,7 +9,8 @@ public class DataPoint implements Serializable {
     Long level;
     Long timestamp;
 
-    private static final long serialVersionUid=1928172l;
+    private static final long serialVersionUID=1928172l;
+
     public DataPoint() {
     }
 

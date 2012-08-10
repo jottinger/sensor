@@ -1,12 +1,96 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!doctype html>
 <html>
 <head>
     <title>Sensor Data</title>
-    <script type='text/javascript' src='/sensor-web/dwr/interface/provider.js'></script>
     <script type='text/javascript' src='/sensor-web/dwr/engine.js'></script>
     <script type='text/javascript' src='/sensor-web/dwr/util.js'></script>
+    <script type='text/javascript' src='/sensor-web/dwr/interface/Provider.js'></script>
+    <script type="text/javascript"
+            src="http://maps.googleapis.com/maps/api/js?sensor=false">
+    </script>
+    <style type="text/css">
+        html {
+            height: 100%
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0
+        }
+
+        #map_canvas {
+            height: 100%;
+            width: 100%;
+            background-color: silver;
+        }
+    </style>
 </head>
 <body>
+<table id="sensorData" border=1>
+</table>
+<div id="map_canvas" style="width:100%; height:100%"></div>
 
+<script type="text/javascript">
+    var locations = [];
+    var map;
+    function initialize() {
+        var mapOptions = {
+            center:new google.maps.LatLng(35.9948, -78.4405),
+            zoom:8,
+            mapTypeId:google.maps.MapTypeId.TERRAIN
+        };
+        map = new google.maps.Map(document.getElementById("map_canvas"),
+                mapOptions);
+        setInterval(updateMap(), 6000);
+    }
+    function updateMap() {
+        Provider.getKeys({
+            callback:function (responseData) {
+            data = eval(responseData);
+            for (i = 0; i < data.length; i++) {
+                Provider.load(data[i], {
+                    callback:function (str) {
+                        var element = eval(str);
+                        //console.log(element);
+                        window.alert(element.longitude);
+                        var myLatLng = new google.maps.LatLng(element['latitude'], element['longitude']);
+
+                        if (locations[data[i]] == null) {
+                            var marker = new google.maps.Marker({
+                                position:myLatlng,
+                                title:data[i]
+                            });
+                            marker.setMap(map);
+                            locations[i] = marker;
+                        }
+                        else {
+                            locations[i].setPosition(myLatLng);
+                        }
+                    }
+                });
+            }
+        }})
+    }
+
+    var data;
+    var table = document.getElementById("sensorData");
+    setInterval(updateMap(), 500);
+
+    Provider.getKeys(function (responseData) {
+        data = eval(responseData);
+        for (i = 0; i < data.length; i++) {
+            elt = document.getElementById(data[i] + "_key");
+            if (elt == null) {
+                elt = table.insertRow(0)
+                elt.id = data[i] + "_key";
+                cell = elt.insertCell("woo!")
+                cell.innerHTML = data[i]
+            }
+//            document.write("<p>"+data[i]+"</p>")
+        }
+    });
+    initialize();
+</script>
 </body>
 </html>
