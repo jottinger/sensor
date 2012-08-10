@@ -32,7 +32,7 @@
 <div id="map_canvas" style="width:100%; height:100%"></div>
 
 <script type="text/javascript">
-    var locations = [];
+    var locations = {};
     var map;
     function initialize() {
         var mapOptions = {
@@ -45,51 +45,46 @@
         setInterval(updateMap(), 6000);
     }
     function updateMap() {
-        Provider.getKeys({
-            callback:function (responseData) {
-            data = eval(responseData);
-            for (i = 0; i < data.length; i++) {
-                Provider.load(data[i], {
-                    callback:function (str) {
-                        var element = eval(str);
-                        //console.log(element);
-                        window.alert(element.longitude);
-                        var myLatLng = new google.maps.LatLng(element['latitude'], element['longitude']);
 
-                        if (locations[data[i]] == null) {
-                            var marker = new google.maps.Marker({
-                                position:myLatlng,
-                                title:data[i]
-                            });
-                            marker.setMap(map);
-                            locations[i] = marker;
-                        }
-                        else {
-                            locations[i].setPosition(myLatLng);
-                        }
+        Provider.getData({
+            callback:function (tsDataEncoded) {
+                var tsData = eval(tsDataEncoded);
+                for (id in tsData) {
+                    var myLatLng = new google.maps.LatLng(tsData[id]['latitude'], tsData[id]['longitude']);
+                    if (locations[id] == null) {
+                        var marker = new google.maps.Marker({
+                            position:myLatLng,
+                            title:id
+                        });
+                        marker.setMap(map);
+                        locations[id] = marker;
                     }
-                });
+                    else {
+                        locations[id].setPosition(myLatLng);
+                    }
+                }
+
             }
-        }})
+        });
     }
 
     var data;
     var table = document.getElementById("sensorData");
-    setInterval(updateMap(), 500);
-
-    Provider.getKeys(function (responseData) {
-        data = eval(responseData);
-        for (i = 0; i < data.length; i++) {
-            elt = document.getElementById(data[i] + "_key");
-            if (elt == null) {
-                elt = table.insertRow(0)
-                elt.id = data[i] + "_key";
-                cell = elt.insertCell("woo!")
-                cell.innerHTML = data[i]
-            }
-//            document.write("<p>"+data[i]+"</p>")
-        }
-    });
+    /*
+     Provider.getKeys(function (responseData) {
+     data = eval(responseData);
+     for (i = 0; i < data.length; i++) {
+     elt = document.getElementById(data[i] + "_key");
+     if (elt == null) {
+     elt = table.insertRow(0)
+     elt.id = data[i] + "_key";
+     cell = elt.insertCell("woo!")
+     cell.innerHTML = data[i]
+     }
+     //            document.write("<p>"+data[i]+"</p>")
+     }
+     });
+     */
     initialize();
 </script>
 </body>

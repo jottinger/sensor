@@ -44,8 +44,8 @@ public class LightSensorActivity extends Activity {
     ScheduledThreadPoolExecutor executor = new ScheduledThreadPoolExecutor(2);
     ObjectMapper mapper = new ObjectMapper();
 
-    private String latitude;
-    private String longitude;
+    private Double latitude;
+    private Double longitude;
     private SensorManager sensorManager;
     private Sensor lightSensor;
     private Connector connector;
@@ -177,8 +177,8 @@ public class LightSensorActivity extends Activity {
     class Listener implements LocationListener, SensorEventListener {
         @Override
         public void onLocationChanged(Location location) {
-            latitude = String.valueOf(location.getLatitude());
-            longitude = String.valueOf(location.getLongitude());
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
             //log("Location: " + latitude + "," + longitude);
         }
 

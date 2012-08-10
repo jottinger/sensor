@@ -4,6 +4,7 @@
 
 <dwr>
     <allow>
+        <convert converter="bean" match="com.redhat.osas.sensor.data.DataPoint" />
         <create creator="new" javascript="Provider">
             <param name="class" value="com.redhat.osas.sensor.web.external.Provider"/>
         </create>

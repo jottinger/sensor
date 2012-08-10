@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class DataPoint implements Serializable {
     String deviceId;
-    String longitude;
-    String latitude;
+    Double longitude;
+    Double latitude;
     Long level;
     Long timestamp;
 
@@ -14,7 +14,7 @@ public class DataPoint implements Serializable {
     public DataPoint() {
     }
 
-    public DataPoint(String deviceId, String latitude, String longitude, int level) {
+    public DataPoint(String deviceId, Double latitude, Double longitude, int level) {
         this.deviceId=deviceId;
         this.latitude=latitude;
         this.longitude=longitude;
@@ -30,19 +30,19 @@ public class DataPoint implements Serializable {
         this.deviceId = deviceId;
     }
 
-    public String getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(Double longitude) {
         this.longitude = longitude;
     }
 
-    public String getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(Double latitude) {
         this.latitude = latitude;
     }
 
