@@ -57,12 +57,12 @@
                             title:id
                         });
                         marker.setMap(map);
-                        marker.setTitle("" + tsData[id]['level'])
+                        marker.setTitle("" + tsData[id]['level']);
                         locations[id] = marker;
                     }
                     else {
                         locations[id].setPosition(myLatLng);
-                        marker.setTitle("" + tsData[id]['level'])
+                        locations[id].setTitle("" + tsData[id]['level'])
                     }
                 }
 
@@ -70,23 +70,6 @@
         });
     }
 
-    var data;
-    var table = document.getElementById("sensorData");
-    /*
-     Provider.getKeys(function (responseData) {
-     data = eval(responseData);
-     for (i = 0; i < data.length; i++) {
-     elt = document.getElementById(data[i] + "_key");
-     if (elt == null) {
-     elt = table.insertRow(0)
-     elt.id = data[i] + "_key";
-     cell = elt.insertCell("woo!")
-     cell.innerHTML = data[i]
-     }
-     //            document.write("<p>"+data[i]+"</p>")
-     }
-     });
-     */
     initialize();
     setInterval(function () {
         updateMap()
