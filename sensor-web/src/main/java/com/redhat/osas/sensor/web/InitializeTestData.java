@@ -17,7 +17,7 @@ public class InitializeTestData implements ServletContextListener {
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         cache = container.getCache("dataPoints");
         // longitude='-78.51060385', latitude='36.07338185', level=154, timestamp=1344543690882}
-        DataPoint dp = new DataPoint("9195551212", 35.773371, -78.67743, 154);
+        DataPoint dp = new DataPoint("9195551212", 35.773371, -78.67743, 154, 255);
         dp.setTimestamp(System.currentTimeMillis());
         cache.put(dp.getDeviceId(), dp);
         System.out.println("DataPoint stored");

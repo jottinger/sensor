@@ -7,19 +7,30 @@ public class DataPoint implements Serializable {
     Double longitude;
     Double latitude;
     Long level;
+
+    public Long getMaxLevel() {
+        return maxLevel;
+    }
+
+    public void setMaxLevel(Long maxLevel) {
+        this.maxLevel = maxLevel;
+    }
+
+    Long maxLevel;
     Long timestamp;
 
-    private static final long serialVersionUID=1928172l;
+    private static final long serialVersionUID = 1928172l;
 
     public DataPoint() {
     }
 
-    public DataPoint(String deviceId, Double latitude, Double longitude, int level) {
-        this.deviceId=deviceId;
-        this.latitude=latitude;
-        this.longitude=longitude;
-        this.level=new Long(level);
-        this.timestamp=System.currentTimeMillis();
+    public DataPoint(String deviceId, Double latitude, Double longitude, long level, long maxLevel) {
+        this.deviceId = deviceId;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.level = level;
+        this.maxLevel = maxLevel;
+        this.timestamp = System.currentTimeMillis();
     }
 
     public String getDeviceId() {

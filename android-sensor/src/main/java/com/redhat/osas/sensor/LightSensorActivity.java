@@ -49,6 +49,7 @@ public class LightSensorActivity extends Activity {
     private SensorManager sensorManager;
     private Sensor lightSensor;
     private Connector connector;
+    private Long maxLevel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -203,7 +204,7 @@ public class LightSensorActivity extends Activity {
                 }
                 DataPoint dataPoint = new DataPoint(voiceMailId,
                         latitude, longitude,
-                        lightLevel.getProgress());
+                        lightLevel.getProgress(), maxLevel);
 
                 try {
                     String data = mapper.writeValueAsString(dataPoint);
@@ -221,7 +222,8 @@ public class LightSensorActivity extends Activity {
 
         @Override
         public void onAccuracyChanged(Sensor sensor, int i) {
-            lightLevel.setMax((int) sensor.getMaximumRange());
+            maxLevel = (long) sensor.getMaximumRange();
+            lightLevel.setMax(maxLevel.intValue());
         }
     }
 
