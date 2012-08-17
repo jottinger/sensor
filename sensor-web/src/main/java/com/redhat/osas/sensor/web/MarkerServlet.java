@@ -27,23 +27,30 @@ public class MarkerServlet extends HttpServlet {
         int stroke = parse(request, "stroke", 0);
         int maxLevel = parse(request, "maxLevel", 255);
         int size = parse(request, "size", 20);
+
         if (size > 799) {
-            System.out.println("Size of image has been truncated to 800x800");
+            System.err.println("Size of image has been truncated to 800x800");
             size = 799;
         }
-        System.out.printf("stroke: %d maxLevel: %d%n", stroke, maxLevel);
+
         float shade = stroke / (maxLevel * 1.0f);
-        System.out.println("shade: " + shade);
+
+        BufferedImage image = drawCircle(size, shade);
+
+        response.setContentType("image/png");
+        OutputStream out = response.getOutputStream();
+        ImageIO.write(image, "png", out);
+        out.close();
+    }
+
+    private BufferedImage drawCircle(int size, float shade) {
         BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) image.getGraphics();
         g2.drawImage(transparentImage, 0, 0, null);
         g2.setColor(new Color(shade, shade, shade));
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.fillOval(0, 0, size, size);
-        response.setContentType("image/png");
-        OutputStream out = response.getOutputStream();
-        ImageIO.write(image, "png", out);
-        out.close();
+        return image;
     }
 
     private Image buildTransparentImage() {
