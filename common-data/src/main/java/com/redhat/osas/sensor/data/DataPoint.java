@@ -3,74 +3,50 @@ package com.redhat.osas.sensor.data;
 import java.io.Serializable;
 
 public class DataPoint implements Serializable {
-    String deviceId;
-    Double longitude;
-    Double latitude;
-    Long level;
-
-    public Long getMaxLevel() {
-        return maxLevel;
-    }
-
-    public void setMaxLevel(Long maxLevel) {
-        this.maxLevel = maxLevel;
-    }
-
-    Long maxLevel;
-    Long timestamp;
+    final String deviceId;
+    final Double longitude;
+    final Double latitude;
+    final Long level;
+    final Long maxLevel;
+    final Long timestamp;
 
     private static final long serialVersionUID = 1928172l;
 
-    public DataPoint() {
-    }
-
-    public DataPoint(String deviceId, Double latitude, Double longitude, long level, long maxLevel) {
+    public DataPoint(String deviceId, Double latitude, Double longitude, long level, long maxLevel, long timestamp) {
         this.deviceId = deviceId;
         this.latitude = latitude;
         this.longitude = longitude;
         this.level = level;
         this.maxLevel = maxLevel;
-        this.timestamp = System.currentTimeMillis();
+        this.timestamp = timestamp;
+    }
+
+    public DataPoint(String deviceId, Double latitude, Double longitude, long level, long maxLevel) {
+        this(deviceId, latitude, longitude, level, maxLevel, System.currentTimeMillis());
     }
 
     public String getDeviceId() {
         return deviceId;
     }
 
-    public void setDeviceId(String deviceId) {
-        this.deviceId = deviceId;
-    }
-
     public Double getLongitude() {
         return longitude;
-    }
-
-    public void setLongitude(Double longitude) {
-        this.longitude = longitude;
     }
 
     public Double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Double latitude) {
-        this.latitude = latitude;
-    }
-
     public Long getLevel() {
         return level;
-    }
-
-    public void setLevel(Long level) {
-        this.level = level;
     }
 
     public Long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Long timestamp) {
-        this.timestamp = timestamp;
+    public Long getMaxLevel() {
+        return maxLevel;
     }
 
     @Override
@@ -84,9 +60,8 @@ public class DataPoint implements Serializable {
         if (latitude != null ? !latitude.equals(dataPoint.latitude) : dataPoint.latitude != null) return false;
         if (level != null ? !level.equals(dataPoint.level) : dataPoint.level != null) return false;
         if (longitude != null ? !longitude.equals(dataPoint.longitude) : dataPoint.longitude != null) return false;
-        if (timestamp != null ? !timestamp.equals(dataPoint.timestamp) : dataPoint.timestamp != null) return false;
+        return !(timestamp != null ? !timestamp.equals(dataPoint.timestamp) : dataPoint.timestamp != null);
 
-        return true;
     }
 
     @Override
@@ -103,11 +78,12 @@ public class DataPoint implements Serializable {
     public String toString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("DataPoint");
-        sb.append("{deviceId='").append(deviceId).append('\'');
-        sb.append(", longitude='").append(longitude).append('\'');
-        sb.append(", latitude='").append(latitude).append('\'');
-        sb.append(", level=").append(level);
-        sb.append(", timestamp=").append(timestamp);
+        sb.append("{deviceId='").append(getDeviceId()).append('\'');
+        sb.append(", longitude='").append(getLongitude()).append('\'');
+        sb.append(", latitude='").append(getLatitude()).append('\'');
+        sb.append(", level=").append(getLevel());
+        sb.append(", timestamp=").append(getTimestamp());
+        sb.append(", maxLevel=").append(getMaxLevel());
         sb.append("}:");
         sb.append(super.toString());
         return sb.toString();

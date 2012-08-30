@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -25,12 +26,11 @@ import org.codehaus.jackson.map.ObjectMapper;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 public class LightSensorActivity extends Activity {
 
-    private static String TAG = "osas-light-sensor";
+    private final static String TAG = "osas-light-sensor";
 
     TextView logBox = null;
     TextView routerUrl = null;
@@ -90,7 +90,8 @@ public class LightSensorActivity extends Activity {
                 if (isChecked) {
                     log("Sensor now active");
                     try {
-                        URL url = new URL(routerUrl.getText().toString());
+                        // used to validate the URL
+                        new URL(routerUrl.getText().toString());
 
                         locationManager.requestLocationUpdates(
                                 LocationManager.GPS_PROVIDER, 500, 1, listener);
@@ -105,16 +106,6 @@ public class LightSensorActivity extends Activity {
                 }
             }
         });
-    }
-
-    private Runnable buildCancelingRunnable(final ScheduledFuture postHandle) {
-        return new Runnable() {
-            @Override
-            public void run() {
-                postHandle.cancel(true);
-                log("Cancelled posting");
-            }
-        };
     }
 
     private void addTextChangeListener() {
@@ -168,7 +159,7 @@ public class LightSensorActivity extends Activity {
     }
 
     private void log(String message) {
-        //Log.i(TAG, message);
+        Log.i(TAG, message);
         if (logBox != null) {
             logBox.append(message);
             logBox.append("\n");

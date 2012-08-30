@@ -29,11 +29,16 @@ public class Provider {
     public Map<String, DataPoint> getData() {
         Map<String, DataPoint> map = new HashMap<>();
         Cache<String, DataPoint> cache = getCache("java:/jboss/infinispan/dataPoints");
-        /*for(String key:cache.keySet()) {
-            map.put(key, cache.get(key));
+        // we do this to mangle the device ids for security.
+        for (Map.Entry<String, DataPoint> entry : cache.entrySet()) {
+            DataPoint oldValue = entry.getValue();
+            String newDeviceId = Integer.toString(oldValue.getDeviceId().hashCode() % 1000);
+            DataPoint value = new DataPoint(newDeviceId,
+                    oldValue.getLatitude(), oldValue.getLongitude(),
+                    oldValue.getLevel(), oldValue.getMaxLevel(), oldValue.getTimestamp());
+            map.put(entry.getKey(), value);
         }
-        */
-        map.putAll(cache);
+
         return map;
     }
 
@@ -44,12 +49,7 @@ public class Provider {
 
     public void store(String key, String data) {
         Cache<String, DataPoint> cache = getCache("java:/jboss/infinispan/dataPoints");
-        DataPoint dp = new DataPoint();
-        dp.setDeviceId(data);
-        dp.setLevel(10l);
-        dp.setLatitude(12.12);
-        dp.setLongitude(24.24);
-        dp.setTimestamp(System.currentTimeMillis());
+        DataPoint dp = new DataPoint(data, 101.0, 12.12, 24, 255);
         cache.put(key, dp);
     }
 
