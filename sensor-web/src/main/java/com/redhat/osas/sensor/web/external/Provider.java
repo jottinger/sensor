@@ -32,7 +32,7 @@ public class Provider {
         // we do this to mangle the device ids for security.
         for (Map.Entry<String, DataPoint> entry : cache.entrySet()) {
             DataPoint oldValue = entry.getValue();
-            String newDeviceId = Integer.toString(oldValue.getDeviceId().hashCode() % 1000);
+            String newDeviceId = Integer.toString(oldValue.getDeviceId().hashCode() % 10000);
             DataPoint value = new DataPoint(newDeviceId,
                     oldValue.getLatitude(), oldValue.getLongitude(),
                     oldValue.getLevel(), oldValue.getMaxLevel(), oldValue.getTimestamp());

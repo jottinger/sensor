@@ -24,6 +24,5 @@ public class InitializeTestData implements ServletContextListener {
 
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        //To change body of implemented methods use File | Settings | File Templates.
     }
 }
