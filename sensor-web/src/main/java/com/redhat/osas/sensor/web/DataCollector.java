@@ -16,14 +16,14 @@ import java.io.PrintWriter;
 
 @WebServlet("/sensor")
 public class DataCollector extends HttpServlet {
-    @Resource(lookup = "java:/jboss/infinispan/dataPoints")
+    @Resource(lookup = "sensorData")
     private CacheContainer container;
     private Cache<String, DataPoint> cache;
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        cache=container.getCache("dataPoints");
+        cache = container.getCache("dataPoints");
 
         String[] data = request.getParameterValues("data");
         String datum = "";

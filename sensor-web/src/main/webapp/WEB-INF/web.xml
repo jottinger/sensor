@@ -23,5 +23,9 @@
         <url-pattern>/dwr/*</url-pattern>
     </servlet-mapping>
 
+    <resource-ref>
+        <res-ref-name>sensorData</res-ref-name>
+        <res-type>org.infinispan.manager.CacheContainer</res-type>
+    </resource-ref>
 
 </web-app>

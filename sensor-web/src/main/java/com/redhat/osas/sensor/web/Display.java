@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 
 @WebServlet("/display")
 public class Display extends HttpServlet {
-    @Resource(lookup = "java:/jboss/infinispan/dataPoints")
+    @Resource(lookup = "sensorData")
     private CacheContainer container;
     private Cache<String, DataPoint> cache;
 
@@ -28,7 +28,7 @@ public class Display extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        cache=container.getCache("dataPoints");
+        cache = container.getCache("dataPoints");
 
         response.setContentType("text/html");
         response.setBufferSize(8192);
@@ -41,7 +41,7 @@ public class Display extends HttpServlet {
             out.print("<tr><td>");
             out.print(key);
             out.println("</td>");
-            out.print("<td width='"+cache.get(key).getLevel()+"' bgcolor='black'>FOO</td>");
+            out.print("<td width='" + cache.get(key).getLevel() + "' bgcolor='black'>FOO</td>");
             out.println("</tr>");
         }
         out.println("</table>");

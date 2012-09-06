@@ -20,7 +20,7 @@ public class Provider {
         try {
             Context ctx = new InitialContext();
             CacheContainer container = (CacheContainer) ctx.lookup(name);
-            return container.getCache("dataPoints");
+            return container.getCache("sensorData");
         } catch (NamingException ne) {
             throw new RuntimeException(ne);
         }
@@ -28,7 +28,7 @@ public class Provider {
 
     public Map<String, DataPoint> getData() {
         Map<String, DataPoint> map = new HashMap<>();
-        Cache<String, DataPoint> cache = getCache("java:/jboss/infinispan/dataPoints");
+        Cache<String, DataPoint> cache = getCache("sensorData");
         // we do this to mangle the device ids for security.
         for (Map.Entry<String, DataPoint> entry : cache.entrySet()) {
             DataPoint oldValue = entry.getValue();
@@ -43,18 +43,18 @@ public class Provider {
     }
 
     public Set<String> getKeys() {
-        Cache<String, DataPoint> cache = getCache("java:/jboss/infinispan/dataPoints");
+        Cache<String, DataPoint> cache = getCache("sensorData");
         return cache.keySet();
     }
 
     public void store(String key, String data) {
-        Cache<String, DataPoint> cache = getCache("java:/jboss/infinispan/dataPoints");
+        Cache<String, DataPoint> cache = getCache("sensorData");
         DataPoint dp = new DataPoint(data, 101.0, 12.12, 24, 255);
         cache.put(key, dp);
     }
 
     public String load(String key) {
-        Cache<String, DataPoint> cache = getCache("java:/jboss/infinispan/dataPoints");
+        Cache<String, DataPoint> cache = getCache("sensorData");
         DataPoint dp = cache.get(key);
         if (dp != null) {
             try {

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<jboss-web xmlns="http://www.jboss.org/j2ee/dtd/jboss-web_5_0.dtd">
+    <resource-ref>
+        <res-ref-name>sensorData</res-ref-name>
+        <jndi-name>java:jboss/sensorData</jndi-name>
+    </resource-ref>
+</jboss-web>
