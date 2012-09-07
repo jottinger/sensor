@@ -2,9 +2,9 @@
 <html>
 <head>
     <title>Sensor Data</title>
-    <script type='text/javascript' src='/sensor-web/dwr/engine.js'></script>
-    <script type='text/javascript' src='/sensor-web/dwr/util.js'></script>
-    <script type='text/javascript' src='/sensor-web/dwr/interface/Provider.js'></script>
+    <script type="text/javascript"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js">
+    </script>
     <script type="text/javascript"
             src="http://maps.googleapis.com/maps/api/js?sensor=false">
     </script>
@@ -42,32 +42,32 @@
                 mapOptions);
     }
     function updateMap() {
+        $.ajax({
+                    url:'provider/data',
+                    success:function (data) {
+                        var tsData = eval(data);
+                        for (id in tsData) {
+                            var myLatLng = new google.maps.LatLng(tsData[id]['latitude'],
+                                    tsData[id]['longitude']);
+                            if (locations[id] != null) {
+                                locations[id].setMap(null);
+                                locations[id] = null;
+                            }
+                            var marker = new google.maps.Marker({
+                                position:myLatLng,
+                                title:id
+                            });
+                            marker.setMap(map);
+                            marker.setIcon("/sensor-web/marker?stroke=" +
+                                    tsData[id]['level'] +
+                                    "&maxLevel=" +
+                                    tsData[id]['maxLevel']);
 
-        Provider.getData({
-            callback:function (tsDataEncoded) {
-                var tsData = eval(tsDataEncoded);
-                for (id in tsData) {
-                    var myLatLng = new google.maps.LatLng(tsData[id]['latitude'],
-                            tsData[id]['longitude']);
-                    if (locations[id] != null) {
-                        locations[id].setMap(null);
-                        locations[id] = null;
+                            locations[id] = marker;
+                        }
                     }
-                    var marker = new google.maps.Marker({
-                        position:myLatLng,
-                        title:id
-                    });
-                    marker.setMap(map);
-                    marker.setIcon("/sensor-web/marker?stroke=" +
-                            tsData[id]['level'] +
-                            "&maxLevel=" +
-                            tsData[id]['maxLevel']);
-
-                    locations[id] = marker;
                 }
-
-            }
-        });
+        );
     }
 
     initialize();

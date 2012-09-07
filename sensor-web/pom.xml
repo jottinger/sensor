@@ -27,7 +27,7 @@ enable third-party plugin if using Maven < 2.1) -->
        variable -->
         <jboss.home>/home/jottinge/tools/jboss-as-7.1.1.Final</jboss.home>
         <infinispan.version>[5.1.5.FINAL,)</infinispan.version>
-        <dwr.version>[2.0.10,)</dwr.version>
+        <resteasy.version>2.3.4.Final</resteasy.version>
     </properties>
 
     <dependencyManagement>
@@ -55,9 +55,10 @@ enable third-party plugin if using Maven < 2.1) -->
 
     <dependencies>
         <dependency>
-            <groupId>org.directwebremoting</groupId>
-            <artifactId>dwr</artifactId>
-            <version>${dwr.version}</version>
+            <groupId>org.jboss.resteasy</groupId>
+            <artifactId>resteasy-jaxrs</artifactId>
+            <version>${resteasy.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -148,7 +149,6 @@ as the API is included in JBoss AS 7 -->
             <artifactId>jackson-jaxrs</artifactId>
             <version>1.9.8</version>
         </dependency>
-
 
         <!-- Needed for running tests (you may also use TestNG) -->
         <dependency>

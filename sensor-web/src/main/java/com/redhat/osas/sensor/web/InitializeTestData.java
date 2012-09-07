@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebListener;
 
 @WebListener
 public class InitializeTestData implements ServletContextListener {
-    @Resource(lookup = "sensorData")
+    @Resource(lookup = "java:comp/env/sensorData")
     private CacheContainer container;
 
     @Override

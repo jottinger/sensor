@@ -4,25 +4,6 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
 
-    <listener>
-        <listener-class>com.redhat.osas.sensor.web.InitializeTestData</listener-class>
-    </listener>
-
-    <servlet>
-        <display-name>DWR Servlet</display-name>
-        <servlet-name>dwr-invoker</servlet-name>
-        <servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
-        <init-param>
-            <param-name>debug</param-name>
-            <param-value>true</param-value>
-        </init-param>
-    </servlet>
-
-    <servlet-mapping>
-        <servlet-name>dwr-invoker</servlet-name>
-        <url-pattern>/dwr/*</url-pattern>
-    </servlet-mapping>
-
     <resource-ref>
         <res-ref-name>sensorData</res-ref-name>
         <res-type>org.infinispan.manager.CacheContainer</res-type>

@@ -4,38 +4,39 @@ import com.redhat.osas.sensor.data.DataPoint;
 import org.infinispan.Cache;
 import org.infinispan.manager.CacheContainer;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
-import java.util.HashMap;
-import java.util.Map;
+import javax.annotation.Resource;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+import java.util.ArrayList;
+import java.util.List;
 
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/data")
 public class Provider {
+    @Resource(lookup = "java:comp/env/sensorData")
+    private CacheContainer container;
+
     <K, V> Cache<K, V> getCache(String name) {
-        try {
-            Context ctx = new InitialContext();
-            CacheContainer container = (CacheContainer) ctx.lookup(name);
-            return container.getCache("sensorData");
-        } catch (NamingException ne) {
-            throw new RuntimeException(ne);
-        }
+        return container.getCache(name);
     }
 
     @SuppressWarnings("UnusedDeclaration")
-    public Map<String, DataPoint> getData() {
-        Map<String, DataPoint> map = new HashMap<>();
+    @GET
+    public List<DataPoint> getData() {
+        List<DataPoint> dataPoints = new ArrayList<>();
         Cache<String, DataPoint> cache = getCache("sensorData");
+
         // we do this to mangle the device ids for security.
-        int counter = 1;
-        for (Map.Entry<String, DataPoint> entry : cache.entrySet()) {
-            DataPoint oldValue = entry.getValue();
+        for (DataPoint oldValue : cache.values()) {
             String newDeviceId = Integer.toString(oldValue.getDeviceId().hashCode() % 10000);
             DataPoint value = new DataPoint(newDeviceId,
                     oldValue.getLatitude(), oldValue.getLongitude(),
                     oldValue.getLevel(), oldValue.getMaxLevel(), oldValue.getTimestamp());
-            map.put(Integer.toString(counter++), value);
+            dataPoints.add(value);
         }
 
-        return map;
+        return dataPoints;
     }
 }
