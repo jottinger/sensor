@@ -18,15 +18,11 @@ public class Provider {
     @Resource(lookup = "java:comp/env/sensorData")
     private CacheContainer container;
 
-    <K, V> Cache<K, V> getCache(String name) {
-        return container.getCache(name);
-    }
-
     @SuppressWarnings("UnusedDeclaration")
     @GET
     public List<DataPoint> getData() {
         List<DataPoint> dataPoints = new ArrayList<>();
-        Cache<String, DataPoint> cache = getCache("sensorData");
+        Cache<String, DataPoint> cache = container.getCache("sensorData");
 
         // we do this to mangle the device ids for security.
         for (DataPoint oldValue : cache.values()) {

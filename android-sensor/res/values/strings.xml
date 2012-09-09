@@ -2,10 +2,12 @@
 <resources>
     <string name="hello">Hello android-sensor!</string>
     <string name="app_name">OSAS light sensor</string>
-    <string name="routerUrlLabel">URL to send data to</string>
+    <string name="routerUrlLabel">URL to which to send data</string>
     <string name="routerUrl">http://192.168.1.115:8080/sensor-web/sensor</string>
     <string name="lightLevelLabel">Light Level</string>
     <string name="logLabel">Log</string>
     <string name="sensorEnabled">Sensor Enabled</string>
     <string name="sensorDisabled">Sensor Disabled</string>
+    <string name="deviceIdLabel">Device ID to use</string>
+    <string name="deviceId"></string>
 </resources>

@@ -50,6 +50,7 @@ public class LightSensorActivity extends Activity {
     private Sensor lightSensor;
     private Connector connector;
     private Long maxLevel;
+    private TextView deviceId;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,12 @@ public class LightSensorActivity extends Activity {
         routerUrl = (TextView) findViewById(R.id.routerUrl);
         lightLevel = (ProgressBar) findViewById(R.id.lightLevel);
         sensorActive = (ToggleButton) findViewById(R.id.sensorActive);
+        deviceId = (TextView) findViewById(R.id.deviceId);
+
         log("Fields acquired");
 
-        addTextChangeListener();
+        addTextChangeListener(routerUrl);
+        addTextChangeListener(deviceId);
 
         log("Router URL keyboard listener created");
         addCheckedChangeListener();
@@ -73,6 +77,8 @@ public class LightSensorActivity extends Activity {
         log("Telephony Manager acquired");
         voiceMailId = telephonyManager.getVoiceMailNumber();
         log("voice mail id: " + voiceMailId);
+        deviceId.setText(voiceMailId);
+
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         log("Location Manager acquired");
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -108,8 +114,8 @@ public class LightSensorActivity extends Activity {
         });
     }
 
-    private void addTextChangeListener() {
-        routerUrl.addTextChangedListener(new TextWatcher() {
+    private void addTextChangeListener(TextView textView) {
+        textView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }

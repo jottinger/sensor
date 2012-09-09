@@ -15,7 +15,7 @@ import java.io.PrintWriter;
 
 @WebServlet("/display")
 public class Display extends HttpServlet {
-    @Resource(lookup = "java:comp/env/usensorData")
+    @Resource(lookup = "java:comp/env/sensorData")
     private CacheContainer container;
     private Cache<String, DataPoint> cache;
 

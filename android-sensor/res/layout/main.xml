@@ -5,18 +5,6 @@
               android:layout_height="fill_parent"
               android:padding="5dp"
         >
-    <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/routerUrlLabel"
-            />
-    <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/routerUrl"
-            android:id="@+id/routerUrl"
-            android:inputType="textUri"/>
-
     <ToggleButton
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
@@ -24,17 +12,46 @@
             android:textOn="@string/sensorEnabled"
             android:textOff="@string/sensorDisabled"
             android:id="@+id/sensorActive"/>
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/routerUrlLabel"
+            />
+
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/routerUrl"
+            android:id="@+id/routerUrl"
+            android:inputType="textUri"/>
+
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/deviceIdLabel"
+            />
+
+    <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/deviceId"
+            android:id="@+id/deviceId"
+            android:inputType="phone"/>
+
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="@string/lightLevelLabel"
             />
+
     <ProgressBar
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/lightLevel"
             style="@android:style/Widget.ProgressBar.Horizontal"
             />
+
     <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
