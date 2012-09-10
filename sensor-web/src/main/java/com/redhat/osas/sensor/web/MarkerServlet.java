@@ -19,14 +19,10 @@ public class MarkerServlet extends HttpServlet {
         transparentImage = buildTransparentImage();
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        doGet(request, response);
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int stroke = parse(request, "stroke", 0);
-        int maxLevel = parse(request, "maxLevel", 255);
-        int size = parse(request, "size", 20);
+        int stroke = parseInteger(request, "stroke", 0);
+        int maxLevel = parseInteger(request, "maxLevel", 255);
+        int size = parseInteger(request, "size", 20);
 
         if (size > 799) {
             System.err.println("Size of image has been truncated to 800x800");
@@ -47,23 +43,17 @@ public class MarkerServlet extends HttpServlet {
         BufferedImage image = new BufferedImage(size, size, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g2 = (Graphics2D) image.getGraphics();
         g2.drawImage(transparentImage, 0, 0, null);
-        g2.setColor(new Color(shade, shade, shade));
+
+        // we're going for yellows here
+        g2.setColor(new Color(shade, shade, 0));
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.fillOval(0, 0, size, size);
         return image;
     }
 
-    private Image buildTransparentImage() {
-        BufferedImage image = new BufferedImage(800, 800, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g2 = (Graphics2D) image.getGraphics();
-        // force the background to be white...
-        g2.setBackground(Color.WHITE);
-        g2.clearRect(0, 0, 800, 800);
-
-        return makeColorTransparent(image, Color.WHITE);
-    }
-
-    private int parse(HttpServletRequest request, String name, int defaultValue) {
+    private static int parseInteger(HttpServletRequest request,
+                                    String name,
+                                    int defaultValue) {
         try {
             return Integer.parseInt(request.getParameter(name));
         } catch (Exception ignored) {
@@ -73,12 +63,28 @@ public class MarkerServlet extends HttpServlet {
         return defaultValue;
     }
 
-    private Image makeColorTransparent(final BufferedImage im, final Color color) {
+    private static Image buildTransparentImage() {
+        BufferedImage image = new BufferedImage(800, 800,
+                BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = (Graphics2D) image.getGraphics();
+        // force the background to be white...
+        g2.setBackground(Color.WHITE);
+        g2.clearRect(0, 0, 800, 800);
+
+        return makeColorTransparent(image, Color.WHITE);
+    }
+
+
+    private static Image makeColorTransparent(final BufferedImage im,
+                                              final Color color) {
         final ImageFilter filter = new RGBImageFilter() {
-            // the color we are looking for (white)... Alpha bits are set to opaque
+            // the color we are looking for (white)...
+            // Alpha bits are set to opaque
             public final int markerRGB = 0xFFFFFFFF;
 
-            public final int filterRGB(final int x, final int y, final int rgb) {
+            public final int filterRGB(final int x,
+                                       final int y,
+                                       final int rgb) {
                 if ((rgb | 0xFF000000) == markerRGB) {
                     // Mark the alpha bits as zero - transparent
                     return 0x00FFFFFF & rgb;
@@ -89,7 +95,8 @@ public class MarkerServlet extends HttpServlet {
             }
         };
 
-        final ImageProducer ip = new FilteredImageSource(im.getSource(), filter);
+        final ImageProducer ip = new FilteredImageSource(im.getSource(),
+                filter);
         return Toolkit.getDefaultToolkit().createImage(ip);
     }
 }
