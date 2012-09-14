@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello android-sensor!</string>
     <string name="app_name">OSAS light sensor</string>
     <string name="routerUrlLabel">URL to which to send data</string>
     <string name="routerUrl">http://192.168.1.115:8080/sensor-web/sensor</string>

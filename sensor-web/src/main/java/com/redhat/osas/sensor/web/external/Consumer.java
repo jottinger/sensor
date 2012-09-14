@@ -1,4 +1,4 @@
-package com.redhat.osas.sensor.web;
+package com.redhat.osas.sensor.web.external;
 
 import com.redhat.osas.sensor.data.DataPoint;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @WebServlet("/sensor")
-public class DataCollector extends HttpServlet {
+public class Consumer extends HttpServlet {
     @Resource(lookup = "java:comp/env/sensorData")
     private CacheContainer container;
     private Cache<String, DataPoint> cache;

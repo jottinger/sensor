@@ -5,11 +5,11 @@ import org.infinispan.Cache;
 import org.infinispan.manager.CacheContainer;
 
 import javax.annotation.Resource;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Produces(MediaType.APPLICATION_JSON)
@@ -34,5 +34,24 @@ public class Provider {
         }
 
         return dataPoints;
+    }
+
+    private static final Comparator<DataPoint> comparator = new Comparator<DataPoint>() {
+        @Override
+        public int compare(DataPoint dataPoint, DataPoint dataPoint1) {
+            return (int) (Math.signum(1.0 * dataPoint.getTimestamp() -
+                    dataPoint1.getTimestamp()));
+        }
+    };
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void submitData(List<DataPoint> dp) {
+        Collections.sort(dp, comparator);
+        Cache<String, DataPoint> cache =
+                container.getCache("sensorData");
+        for (DataPoint dataPoint : dp) {
+            cache.put(dataPoint.getDeviceId(), dataPoint);
+        }
     }
 }
