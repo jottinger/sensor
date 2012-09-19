@@ -9,7 +9,7 @@ public abstract class BaseConnector implements Connector {
     @Override
     public void connect(String uri) {
         try {
-            URL url = new URL(uri);
+            new URL(uri);
         } catch (MalformedURLException e) {
             throw new ConnectorException(e);
         }
@@ -17,6 +17,7 @@ public abstract class BaseConnector implements Connector {
         doConnect(this.uri);
     }
 
+    @SuppressWarnings("UnusedParameters")
     protected void doConnect(String uri) {
     }
 
