@@ -14,6 +14,10 @@ public abstract class BaseConnector implements Connector {
             throw new ConnectorException(e);
         }
         this.uri = uri;
+        doConnect(this.uri);
+    }
+
+    protected void doConnect(String uri) {
     }
 
     @Override
@@ -36,5 +40,6 @@ public abstract class BaseConnector implements Connector {
         doPublish(data);
     }
 
-    protected abstract void doPublish(String data);
+    protected void doPublish(String data) {
+    }
 }
