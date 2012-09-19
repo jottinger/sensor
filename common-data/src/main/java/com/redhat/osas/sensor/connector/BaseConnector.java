@@ -4,6 +4,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public abstract class BaseConnector implements Connector {
+    public static final String ERROR_MESSAGE =
+            "No uri provided for connector";
     String uri;
 
     @Override
@@ -34,7 +36,7 @@ public abstract class BaseConnector implements Connector {
     public void publish(String data) {
         if (!isConnected()) {
             if (uri == null) {
-                throw new ConnectorException("No uri provided for connector");
+                throw new ConnectorException(ERROR_MESSAGE);
             }
             connect(uri);
         }
