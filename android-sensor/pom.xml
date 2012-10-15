@@ -14,7 +14,7 @@
     <name>android-sensor</name>
 
     <properties>
-        <platform.version>2.3.3</platform.version>
+        <platform.version>4.0.1.2</platform.version>
     </properties>
 
     <dependencies>
