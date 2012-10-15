@@ -2,6 +2,8 @@ package com.redhat.osas.sensor.connector;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public abstract class BaseConnector implements Connector {
     public static final String ERROR_MESSAGE =
@@ -33,14 +35,21 @@ public abstract class BaseConnector implements Connector {
     }
 
     @Override
-    public void publish(String data) {
-        if (!isConnected()) {
-            if (uri == null) {
-                throw new ConnectorException(ERROR_MESSAGE);
+    public void publish(final String data) {
+        ExecutorService service = Executors.newSingleThreadExecutor();
+        service.submit(new Runnable() {
+            @Override
+            public void run() {
+                if (!isConnected()) {
+                    if (uri == null) {
+                        throw new ConnectorException(ERROR_MESSAGE);
+                    }
+                    connect(uri);
+                }
+                doPublish(data);
             }
-            connect(uri);
-        }
-        doPublish(data);
+        });
+        service.shutdown();
     }
 
     protected void doPublish(String data) {

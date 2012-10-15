@@ -18,8 +18,7 @@ public class HttpConnector extends BaseConnector {
     HttpPost httppost;
 
     @Override
-    public void connect(String uri) {
-        this.uri=uri;
+    protected void doConnect(String URI) {
         httppost = new HttpPost(uri);
     }
 
